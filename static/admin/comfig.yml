@@ -6,7 +6,7 @@ media_folder: 'static/img/'
 public_folder: 'img'
 collections:
   - file: "content/successful_swe.md"
-    lable: "Successful SWE Tips"
+    label: "Successful SWE Tips"
     name: "successful_swe"
     fields:
       - {label: "Title", name: "title", widget: "string"}
