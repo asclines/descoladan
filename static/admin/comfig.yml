@@ -9,7 +9,6 @@ collections:
     label: "Technical Interview Prep"
     folder: "content/tech_interview_prep"
     create: true
-    path: '{{slug}}/index'
     fields: # The fields for each document, usually in front matter
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
