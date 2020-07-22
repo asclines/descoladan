@@ -2,5 +2,5 @@
 title: "Welcome"
 featured_image: ''
 description: ""
-background: "images/bg.jpg"
+background: "img/bg.jpg"
 ---
