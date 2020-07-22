@@ -2,6 +2,7 @@
 title: "Successful SWE Tips"
 featured_image: ''
 draft: false
+weight: 5
 ---
 
 This is a collection of tips I have curated that I believe anyone wishing to succeed as a SWE in industry should read.

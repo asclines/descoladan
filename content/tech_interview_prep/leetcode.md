@@ -2,6 +2,7 @@
 title: Leetcode
 date: 2020-07-21T18:38:34-05:00
 draft: false
+weight: 30
 ---
 ###### [Back to Intro](#intro)
 

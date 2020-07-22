@@ -2,6 +2,7 @@
 title: Friend
 date: 2020-07-21T18:38:54-05:00
 draft: false
+weight: 40
 ---
 ###### [Back to Intro](#intro)
 
