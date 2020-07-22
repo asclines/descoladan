@@ -9,9 +9,8 @@ collections:
     label: "Technical Interview Prep"
     folder: "content/tech_interview_prep"
     create: true
-    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    path: '{{slug}}/index'
     fields: # The fields for each document, usually in front matter
-      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Body", name: "body", widget: "markdown"}
