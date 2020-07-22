@@ -3,4 +3,4 @@
 	url = https://github.com/budparr/gohugo-theme-ananke.git
 [submodule "themes/dimension"]
 	path = themes/dimension
-	url = https://github.com/your-identity/hugo-theme-dimension.git
+	url = https://github.com/asclines/hugo-theme-dimension.git
