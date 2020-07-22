@@ -8,6 +8,17 @@ collections:
   - name: pages
     label: "Pages"
     files:
+      - file: "content/about.md"
+        label: "About"
+        name: "about"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - label: "Draft"
+            name: "draft" 
+            required: false
+            widget: "boolean"
+            default: false
+          - {label: "Body", name: "body", widget: "markdown"}
       - file: "content/successful_swe.md"
         label: "Successful SWE Tips"
         name: "successful_swe"
