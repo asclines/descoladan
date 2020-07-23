@@ -38,12 +38,12 @@ See a problem? What if your input was `[-1,-1,-1]`? This solution would return 0
 ### Now, let's get to solving this problem.
 
 
-At first thought, we might consider generating all spans of subarrays and finding their maxes. There are n(n+1)/2 subarrays which gives us a O(n^2) time complexity. Depending on how these arrays are stored we could an unpleasant space complexity as well.
+At first thought, we might consider generating all spans of subarrays and finding their maxes. There are `n(n+1)/2` subarrays which gives us a `O(n^2)` time complexity. Depending on how these arrays are stored we could an unpleasant space complexity as well.
 
-There are certain optimizations one might be able to think of involving early stoppage and whatnot. However, that could lead to some ugly code and still our Big-O would be still be O(n^2) at worst case. So let's keep thinking.
+There are certain optimizations one might be able to think of involving early stoppage and whatnot. However, that could lead to some ugly code and still our Big-O would be still be `O(n^2)` at worst case. So let's keep thinking.
 
 From the problem statement, since we are given no constraints on ordering of numbers we have to assume the worst case is when the entire array is a contiguous subarray. Thus our solution needs to be at least linear.
-Additionally we also need to consider saving results from previous computations. For example [1,2] and [1,2,3] both involve summing 1 and 2. 
+Additionally we also need to consider saving results from previous computations. For example `[1,2]` and `[1,2,3]` both involve summing 1 and 2. 
 
 When I think linear, I think iterative. Approaching this problem iteratively left to right, with a smaller example `[2,-1,3]`, let's track max numbers.
 
