@@ -21,9 +21,10 @@ Explanation: [4,-1,2,1] has the largest sum = 6
 ## Walkthrough
 
 #### Understanding the problem statement
+First thing we want to do is confirm we understand the problem, it's constraints and what is expected. For example, while this problem is called "Maximum Subarray" and seems oriented around the concept of "subarray", we really only need the sum. Not needing to track what the actual subarray simplifies our work some.
 
-First thing we want to do is make sure we fully grasp the problem and understand possible corner cases. This is a relatively straight forward problem statement, but not without it's edge cases. 
-There is one phrase "containing at least one number" we need to remember. For example if we had this code:
+This is a relatively straightforward problem statement, but not without it's edge cases. 
+There is one phrase "containing at least one number" we need to remember. What if our solution contained:
 ```
 largest_sum = 0;
 for subarray in possible_subarrays:
@@ -37,68 +38,74 @@ See a problem? What if your input was `[-1,-1,-1]`? This solution would return 0
 ### Now, let's get to solving this problem.
 
 
-At first thought, we might consider generating all spans of subarrays and finding their maxes. However, that is incredibly inefficient and we should continuing thinking. There are n(n+1)/2 subarrays which gives us a O(n^2) time complexity.
+At first thought, we might consider generating all spans of subarrays and finding their maxes. There are n(n+1)/2 subarrays which gives us a O(n^2) time complexity. Depending on how these arrays are stored we could an unpleasant space complexity as well.
 
 There are certain optimizations one might be able to think of involving early stoppage and whatnot. However, that could lead to some ugly code and still our Big-O would be still be O(n^2) at worst case. So let's keep thinking.
 
 From the problem statement, since we are given no constraints on ordering of numbers we have to assume the worst case is when the entire array is a contiguous subarray. Thus our solution needs to be at least linear.
 Additionally we also need to consider saving results from previous computations. For example [1,2] and [1,2,3] both involve summing 1 and 2. 
 
+When I think linear, I think iterative. Approaching this problem iteratively left to right, with a smaller example `[2,-1,3]`, let's track max numbers.
 
-So let's approach this iteratively, with a smaller example: `[2,-1,3]`
+* When looking at sub-array [2] the max is 2.  
+* When looking at sub-array [2,-1] we have a dilemma. 2 + -1 = 1. We know that we have a max of 2 from the previous step. So if we are looking at this greedily we might discard and start over at the next point. However we can see that the max will be 4 using the whole array so this step is actually the right direction.   
+* What we need is a way to store our previous max. This will also allow us to store results from previous computations.
 
-Iterating left to right let's track max numbers.  
-When looking at sub-array [2] the max is 2.  
-When looking at sub-array [2,-1] we have a dilemma. 2 + -1 = 1. We know that we have a max of 2 from the previous step. So if we are looking at this greedily we might discard and start over at the next point. However we can see that the max will be 4 using the whole array so this step is actually the right direction.   
-What we need is a way to store our previous max. This will also allow us to store results from previous computations.
-
-Let's have another list: `maxes` that we can use for storing previous maxes. More specifically `maxes[i]` holds the largest sum seen up to `i` in `input`.
+We can accomplish this using another list, `maxes`, for storing previous maxes. More specifically `maxes[i]` holds the largest sum seen up to `i` in `input`.  
 
 Let's see it in action. 
 
 `input: [-2,1,2,3,-1]`  
 `maxes: [ 0,0,0,0,0]`  
 
-We can go ahead and initialize `max[0]` to `input[0]` as that is the max to that point.
-`maxes: [-2,0,0,0,0]`
-Starting with `i = 1` we want to know two things:  
+We can go ahead and initialize `maxes[0]` to `input[0]` as that is the max to that point.  
+
+`maxes: [-2,0,0,0,0]` 
+
+For each of the following elements of `input` we want to know two things:  
 1) What was the previous max before we included this index?  
-  `maxes[i-1] = -2`
-2) If we use previous max with value at this index do we getter better or worse results than not using previous sum at all?
-   `maxes[i-1] + input[i] = -1`
+2) What is the value of this element?
+3) Is this element better off not using the previous max? aka what is better, `input[i]` or `maxes[i-1] + input[1]`?
 
-In this case the previous max hurts us so let's not use it and set `maxes[i] = 1`.
+ 
+Starting with case`i = 1`:  
+1) Previous max: `maxes[i-1] = -2` . 
+2) Current value: `input[i] = 1`
+3) Combined: `maxes[i-1] + input[i] = -1`
 
-Now we have `maxes: [-2,1,0,0,0]`
+The previous max hurts us so let's not use it and set `maxes[i] = 1`.
+
+`maxes: [-2,1,0,0,0]`
 
 Case `i = 2`:     
-1) `maxes[i-1] = 1` .  
-2) `maxes[i-1] + input[i] = 3` 
+1) Previous max: `maxes[i-1] = 1`  
+2) Current value: `input[i] = 2`
+3) Combined: `maxes[i-1] + input[i] = 3`
+
  
 In this case the previous max helps us so let's use it and set `maxes[1] = 3`.
 
-Now we have `maxes: [-2,1,3,0,0]`
+`maxes: [-2,1,3,0,0]`
 
 
 Case `i = 3`:  
-`input[i] = 3`
-1) `maxes[i-1] = 3`
-2) `maxes[i-1] + input[i] = 6`
+1) Previous max: `maxes[i-1] = 3`  
+2) Current value: `input[i] = 3`
+3) Combined: `maxes[i-1] + input[i] = 6`
  
 In this case the previous max helps us so let's use it and set `maxes[i] = 6`.
 
-Now we have `maxes: [-2,1,3,6,0]`
+`maxes: [-2,1,3,6,0]`
 
 Final case `i = 4`:  
-`input[i] = -1`
-1) `maxes[i-1] = 6`
-2) `maxes[i-1] + input[i] = 5` . 
-In this case the previous max hurts us so let's not use it and set `maxes[i] = 5`.
+1) Previous max: `maxes[i-1] = 6`  
+2) Current value: `input[i] = -1`
+3) Combined: `maxes[i-1] + input[i] = 5`
 
 
-Now we have `maxes: [-2,1,3,6,5]`
+`maxes: [-2,1,3,6,5]`
 
-At this point we have now have a lovely of possible maxes for this array. We simply need to take the max value from this list and we have our answer.
+At this point we have now have a lovely list of possible maxes for this array. We simply need to take the max value from this list and we have our answer.
 
 So our algorithm becomes:
 ```
