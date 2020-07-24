@@ -150,7 +150,10 @@ for i in [1 ... n-1]:
 return largest_sum
 ```
 
-If `input` variable is not mutable:
+But this change doesn't affect space/time complexities.
+
+
+In the case that your `input` variable is not mutable we can use two variables to hold the largest seen sum and what would be the equivalent of `input[i-1]` from our previous solution.
 ```
 largest_sum = input[0]
 previous_sum = input[0]
@@ -159,8 +162,6 @@ for i in [1 ... n-1]:
  largest_sum = max(previous_sum[i], largest_sum)
 return largest_sum
 ```
-
-But this change doesn't affect space/time complexities.
 
 #### Divide n' Conquer
 
