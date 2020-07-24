@@ -127,12 +127,9 @@ return max(maxes)
 
 So now that we have a solution that is acceptable. As we inferred earlier, linear is as good as we can expect. But what about space? If you have time in an interview, the interviewer might have a follow up challenge for you; your solution must be O(1) space complexity.
 
-So how do we do this? Well given we only have one data structure that grows linearly with the input, `maxes` that is where we need to look. Two possible solutions come to mind:
+So how do we do this? Well given we only have one data structure that grows linearly with the input, `maxes` that is where we need to look. Two possible solutions come to mind depending on whether or not `input` data is mutable.
 
-1. Is there a way to reuse the `input` data?
-2. Is there a way to use a single variable to hold previous maxes? 
-
-IDK about you but I can't think of a way to accomplish number 2, so let's assume interviewer says your `input` variable is mutable. Meaning you can modify it. Looking back at our algorithm we can see that we only use `input[i]` at `i`. More importantly, we never "look back". So we can use `input` as our `maxes` list as well. Thus we get:
+In that case that your `input` variable is mutable. Meaning you can modify it. Looking back at our algorithm we can see that we only use `input[i]` at `i`. More importantly, we never "look back". So we can use `input` as our `maxes` list as well. Thus we get:
 
 ```
 for i in [1 ... n-1]:
@@ -150,6 +147,16 @@ largest_sum = input[0]
 for i in [1 ... n-1]:
   input[i] = max(input[i], input[i] + input[i-1])
   largest_sum = max(largest_sum, input[i])
+return largest_sum
+```
+
+If `input` variable is not mutable:
+```
+largest_sum = input[0]
+previous_sum = input[0]
+for i in [1 ... n-1]:
+ previous_sum =  max(input[i], input[i] + previous_sum)
+ largest_sum = max(previous_sum[i], largest_sum)
 return largest_sum
 ```
 
